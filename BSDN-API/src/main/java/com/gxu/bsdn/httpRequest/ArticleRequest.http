@@ -1,0 +1,57 @@
+### selectByParam
+POST http://localhost:9090/article/selectByParam
+Content-Type: application/json
+token: {{token}}
+
+{
+  "author": "",
+  "title": "s",
+  "category": ""
+}
+
+### public
+POST http://localhost:9090/article/public
+Content-Type: application/json
+token: {{token}}
+
+{
+  "authorId": 1,
+  "categoryId": 1,
+  "collectCount": 0,
+  "content": "string",
+  "contentHtml": "string",
+  "createTime": "",
+  "id": null,
+  "thumbCount": 0,
+  "title": "string",
+  "viewCount": 0
+}
+
+### update
+POST http://localhost:9090/article/update
+Content-Type: application/json
+token: {{TOKEN}}
+
+{
+  "authorId": 1,
+  "categoryId": 1,
+  "collectCount": 0,
+  "content": "string",
+  "contentHtml": "string",
+  "createTime": "",
+  "id": 5,
+  "thumbCount": 0,
+  "title": "string",
+  "viewCount": 0
+}
+
+### selectByCategoryName
+POST http://localhost:9090/article/selectByCategoryName
+Content-Type: application/json
+token: {{token}}
+
+{
+  "categoryName": "",
+  "description": "藍月なくる",
+  "id": 1
+}

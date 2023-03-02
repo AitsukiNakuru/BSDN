@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxu.bsdn.dao.FanMapper">
+    <resultMap id="BaseResultMap" type="com.gxu.bsdn.entity.Fan">
+        <!--@mbg.generated-->
+        <!--@Table fan-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="author_id" jdbcType="BIGINT" property="authorId"/>
+        <result column="fan_id" jdbcType="BIGINT" property="fanId"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <!--@mbg.generated-->
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <!--@mbg.generated-->
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id,
+        author_id,
+        fan_id
+    </sql>
+    <sql id="Fan_Alias_Column_List">
+        <!--@mbg.generated-->
+        fan.id,
+        author_id,
+        fan_id,
+    </sql>
+    <select id="selectByExample" parameterType="com.gxu.bsdn.entity.example.FanExample" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from fan
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from fan
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        <!--@mbg.generated-->
+        delete
+        from fan
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.gxu.bsdn.entity.example.FanExample">
+        <!--@mbg.generated-->
+        delete
+        from fan
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.gxu.bsdn.entity.Fan" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into fan (author_id, fan_id)
+        values (#{authorId,jdbcType=BIGINT}, #{fanId,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.gxu.bsdn.entity.Fan"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into fan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="authorId != null">
+                author_id,
+            </if>
+            <if test="fanId != null">
+                fan_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="authorId != null">
+                #{authorId,jdbcType=BIGINT},
+            </if>
+            <if test="fanId != null">
+                #{fanId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.gxu.bsdn.entity.example.FanExample" resultType="java.lang.Long">
+        <!--@mbg.generated-->
+        select count(*)
+        from fan
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        <!--@mbg.generated-->
+        update fan
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.authorId != null">
+                author_id = #{record.authorId,jdbcType=BIGINT},
+            </if>
+            <if test="record.fanId != null">
+                fan_id = #{record.fanId,jdbcType=BIGINT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        <!--@mbg.generated-->
+        update fan
+        set id        = #{record.id,jdbcType=BIGINT},
+            author_id = #{record.authorId,jdbcType=BIGINT},
+            fan_id    = #{record.fanId,jdbcType=BIGINT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.gxu.bsdn.entity.Fan">
+        <!--@mbg.generated-->
+        update fan
+        <set>
+            <if test="authorId != null">
+                author_id = #{authorId,jdbcType=BIGINT},
+            </if>
+            <if test="fanId != null">
+                fan_id = #{fanId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.gxu.bsdn.entity.Fan">
+        <!--@mbg.generated-->
+        update fan
+        set author_id = #{authorId,jdbcType=BIGINT},
+            fan_id    = #{fanId,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateBatch" parameterType="java.util.List">
+        <!--@mbg.generated-->
+        update fan
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="author_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=BIGINT} then #{item.authorId,jdbcType=BIGINT}
+                </foreach>
+            </trim>
+            <trim prefix="fan_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=BIGINT} then #{item.fanId,jdbcType=BIGINT}
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach close=")" collection="list" item="item" open="(" separator=", ">
+            #{item.id,jdbcType=BIGINT}
+        </foreach>
+    </update>
+    <update id="updateBatchSelective" parameterType="java.util.List">
+        <!--@mbg.generated-->
+        update fan
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="author_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.authorId != null">
+                        when id = #{item.id,jdbcType=BIGINT} then #{item.authorId,jdbcType=BIGINT}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="fan_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.fanId != null">
+                        when id = #{item.id,jdbcType=BIGINT} then #{item.fanId,jdbcType=BIGINT}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach close=")" collection="list" item="item" open="(" separator=", ">
+            #{item.id,jdbcType=BIGINT}
+        </foreach>
+    </update>
+    <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into fan
+            (author_id, fan_id)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.authorId,jdbcType=BIGINT}, #{item.fanId,jdbcType=BIGINT})
+        </foreach>
+    </insert>
+</mapper>

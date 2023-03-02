@@ -1,0 +1,53 @@
+
+### login
+POST http://localhost:9090/user/login
+Content-Type: application/json
+token:
+
+{
+  "avatar": "",
+  "createTime": "",
+  "email": "",
+  "id": null,
+  "introduction": "",
+  "lastLogin": "",
+  "nickname": "",
+  "password": "AitsukiNakuru",
+  "username": "AitsukiNakuru"
+}
+> {% client.global.set("token", response.body.data); %}
+
+### update
+POST http://localhost:9090/user/update
+Content-Type: application/json
+token: {{TOKEN}}
+
+{
+  "avatar": "",
+  "createTime": "",
+  "email": "",
+  "id": 1,
+  "introduction": "",
+  "lastLogin": "",
+  "nickname": "",
+  "password": "AitsukiNakuru",
+  "username": "AitsukiNakuru"
+}
+
+
+### register
+POST http://localhost:9090/user/register
+Content-Type: application/json
+token:
+
+{
+  "avatar": "ItsukiNatsume",
+  "createTime": "",
+  "email": "ItsukiNatsume",
+  "id": null,
+  "introduction": "ItsukiNatsume",
+  "lastLogin": "",
+  "nickname": "ItsukiNatsume",
+  "password": "ItsukiNatsume",
+  "username": "ItsukiNatsume"
+}

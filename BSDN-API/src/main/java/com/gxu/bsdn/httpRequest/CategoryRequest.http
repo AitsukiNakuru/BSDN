@@ -1,0 +1,21 @@
+### add
+POST http://localhost:9090/category/add
+Content-Type: application/json
+token: {{token}}
+
+{
+  "categoryName": "nayuta",
+  "description": "",
+  "id": null
+}
+
+### delete
+POST http://localhost:9090/category/delete
+Content-Type: application/json
+token: {{token}}
+
+{
+  "categoryName": "",
+  "description": "",
+  "id": 3
+}

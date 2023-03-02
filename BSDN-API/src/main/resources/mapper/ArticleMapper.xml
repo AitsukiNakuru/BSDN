@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gxu.bsdn.dao.ArticleMapper">
+    <resultMap id="BaseResultMap" type="com.gxu.bsdn.entity.Article">
+        <!--@mbg.generated-->
+        <!--@Table article-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="title" jdbcType="LONGVARCHAR" property="title"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="author_id" jdbcType="BIGINT" property="authorId"/>
+        <result column="category_id" jdbcType="BIGINT" property="categoryId"/>
+        <result column="view_count" jdbcType="BIGINT" property="viewCount"/>
+        <result column="thumb_count" jdbcType="BIGINT" property="thumbCount"/>
+        <result column="collect_count" jdbcType="BIGINT" property="collectCount"/>
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+        <result column="content_html" jdbcType="LONGVARCHAR" property="contentHtml"/>
+    </resultMap>
+    <resultMap id="ArticleWithAuthorAndCategoryMap" type="com.gxu.bsdn.vo.ArticleWithAuthorAndCategory">
+        <!--@Table article-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="title" jdbcType="LONGVARCHAR" property="title"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="author_id" jdbcType="BIGINT" property="authorId"/>
+        <result column="category_id" jdbcType="BIGINT" property="categoryId"/>
+        <result column="view_count" jdbcType="BIGINT" property="viewCount"/>
+        <result column="thumb_count" jdbcType="BIGINT" property="thumbCount"/>
+        <result column="collect_count" jdbcType="BIGINT" property="collectCount"/>
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+        <result column="content_html" jdbcType="LONGVARCHAR" property="contentHtml"/>
+        <association property="author" javaType="com.gxu.bsdn.entity.User">
+            <!--@Table `user`-->
+            <id column="id" jdbcType="BIGINT" property="id"/>
+            <result column="username" jdbcType="VARCHAR" property="username"/>
+            <result column="password" jdbcType="VARCHAR" property="password"/>
+            <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+            <result column="introduction" jdbcType="LONGVARCHAR" property="introduction"/>
+            <result column="avatar" jdbcType="LONGVARCHAR" property="avatar"/>
+            <result column="email" jdbcType="LONGVARCHAR" property="email"/>
+            <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+            <result column="last_login" jdbcType="TIMESTAMP" property="lastLogin"/>
+        </association>
+        <association property="category" javaType="com.gxu.bsdn.entity.Category">
+            <!--@Table category-->
+            <id column="id" jdbcType="BIGINT" property="id" />
+            <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+            <result column="description" jdbcType="LONGVARCHAR" property="description" />
+        </association>
+    </resultMap>
+    <resultMap id="CategoryWithArticleMap" type="com.gxu.bsdn.vo.CategoryWithArticle">
+        <!--@Table category-->
+        <id column="category_id" jdbcType="BIGINT" property="id" />
+        <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+        <result column="description" jdbcType="LONGVARCHAR" property="description" />
+
+        <collection property="articleList" ofType="com.gxu.bsdn.vo.ArticleWithAuthorAndCategory" resultMap="ArticleWithAuthorAndCategoryMap">
+            <!--@Table article-->
+            <id column="article_id" jdbcType="BIGINT" property="id"/>
+            <result column="title" jdbcType="LONGVARCHAR" property="title"/>
+            <result column="article_create_time" jdbcType="TIMESTAMP" property="createTime"/>
+            <result column="author_id" jdbcType="BIGINT" property="authorId"/>
+            <result column="category_id" jdbcType="BIGINT" property="categoryId"/>
+            <result column="view_count" jdbcType="BIGINT" property="viewCount"/>
+            <result column="thumb_count" jdbcType="BIGINT" property="thumbCount"/>
+            <result column="collect_count" jdbcType="BIGINT" property="collectCount"/>
+            <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+            <result column="content_html" jdbcType="LONGVARCHAR" property="contentHtml"/>
+            <association property="author" javaType="com.gxu.bsdn.entity.User">
+                <!--@Table `user`-->
+                <id column="user_id" jdbcType="BIGINT" property="id"/>
+                <result column="username" jdbcType="VARCHAR" property="username"/>
+                <result column="password" jdbcType="VARCHAR" property="password"/>
+                <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+                <result column="introduction" jdbcType="LONGVARCHAR" property="introduction"/>
+                <result column="avatar" jdbcType="LONGVARCHAR" property="avatar"/>
+                <result column="email" jdbcType="LONGVARCHAR" property="email"/>
+                <result column="user_create_time" jdbcType="TIMESTAMP" property="createTime"/>
+                <result column="last_login" jdbcType="TIMESTAMP" property="lastLogin"/>
+            </association>
+            <association property="category" javaType="com.gxu.bsdn.entity.Category">
+                <!--@Table category-->
+                <id column="category_id" jdbcType="BIGINT" property="id" />
+                <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+                <result column="description" jdbcType="LONGVARCHAR" property="description" />
+            </association>
+        </collection>
+
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <!--@mbg.generated-->
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <!--@mbg.generated-->
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id,
+        title,
+        create_time,
+        author_id,
+        category_id,
+        view_count,
+        thumb_count,
+        collect_count,
+        content,
+        content_html
+    </sql>
+    <sql id="Article_Alias_Column_List">
+        <!--@mbg.generated-->
+        article.id as article_id,
+        title,
+        article.create_time as article_create_time,
+        author_id,
+        category_id,
+        view_count,
+        thumb_count,
+        collect_count,
+        content,
+        content_html,
+    </sql>
+    <select id="selectByExample" parameterType="com.gxu.bsdn.entity.example.ArticleExample" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from article
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from article
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        <!--@mbg.generated-->
+        delete
+        from article
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.gxu.bsdn.entity.example.ArticleExample">
+        <!--@mbg.generated-->
+        delete
+        from article
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.gxu.bsdn.entity.Article"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into article (title, create_time, author_id,
+                             category_id, view_count, thumb_count,
+                             collect_count, content, content_html)
+        values (#{title,jdbcType=LONGVARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{authorId,jdbcType=BIGINT},
+                #{categoryId,jdbcType=BIGINT}, #{viewCount,jdbcType=BIGINT}, #{thumbCount,jdbcType=BIGINT},
+                #{collectCount,jdbcType=BIGINT}, #{content,jdbcType=LONGVARCHAR}, #{contentHtml,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.gxu.bsdn.entity.Article"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">
+                title,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="authorId != null">
+                author_id,
+            </if>
+            <if test="categoryId != null">
+                category_id,
+            </if>
+            <if test="viewCount != null">
+                view_count,
+            </if>
+            <if test="thumbCount != null">
+                thumb_count,
+            </if>
+            <if test="collectCount != null">
+                collect_count,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="contentHtml != null">
+                content_html,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">
+                #{title,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="authorId != null">
+                #{authorId,jdbcType=BIGINT},
+            </if>
+            <if test="categoryId != null">
+                #{categoryId,jdbcType=BIGINT},
+            </if>
+            <if test="viewCount != null">
+                #{viewCount,jdbcType=BIGINT},
+            </if>
+            <if test="thumbCount != null">
+                #{thumbCount,jdbcType=BIGINT},
+            </if>
+            <if test="collectCount != null">
+                #{collectCount,jdbcType=BIGINT},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="contentHtml != null">
+                #{contentHtml,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.gxu.bsdn.entity.example.ArticleExample" resultType="java.lang.Long">
+        <!--@mbg.generated-->
+        select count(*)
+        from article
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        <!--@mbg.generated-->
+        update article
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.title != null">
+                title = #{record.title,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.authorId != null">
+                author_id = #{record.authorId,jdbcType=BIGINT},
+            </if>
+            <if test="record.categoryId != null">
+                category_id = #{record.categoryId,jdbcType=BIGINT},
+            </if>
+            <if test="record.viewCount != null">
+                view_count = #{record.viewCount,jdbcType=BIGINT},
+            </if>
+            <if test="record.thumbCount != null">
+                thumb_count = #{record.thumbCount,jdbcType=BIGINT},
+            </if>
+            <if test="record.collectCount != null">
+                collect_count = #{record.collectCount,jdbcType=BIGINT},
+            </if>
+            <if test="record.content != null">
+                content = #{record.content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="record.contentHtml != null">
+                content_html = #{record.contentHtml,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        <!--@mbg.generated-->
+        update article
+        set id            = #{record.id,jdbcType=BIGINT},
+            title         = #{record.title,jdbcType=LONGVARCHAR},
+            create_time   = #{record.createTime,jdbcType=TIMESTAMP},
+            author_id     = #{record.authorId,jdbcType=BIGINT},
+            category_id   = #{record.categoryId,jdbcType=BIGINT},
+            view_count    = #{record.viewCount,jdbcType=BIGINT},
+            thumb_count   = #{record.thumbCount,jdbcType=BIGINT},
+            collect_count = #{record.collectCount,jdbcType=BIGINT},
+            content       = #{record.content,jdbcType=LONGVARCHAR},
+            content_html  = #{record.contentHtml,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.gxu.bsdn.entity.Article">
+        <!--@mbg.generated-->
+        update article
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="authorId != null">
+                author_id = #{authorId,jdbcType=BIGINT},
+            </if>
+            <if test="categoryId != null">
+                category_id = #{categoryId,jdbcType=BIGINT},
+            </if>
+            <if test="viewCount != null">
+                view_count = #{viewCount,jdbcType=BIGINT},
+            </if>
+            <if test="thumbCount != null">
+                thumb_count = #{thumbCount,jdbcType=BIGINT},
+            </if>
+            <if test="collectCount != null">
+                collect_count = #{collectCount,jdbcType=BIGINT},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="contentHtml != null">
+                content_html = #{contentHtml,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.gxu.bsdn.entity.Article">
+        <!--@mbg.generated-->
+        update article
+        set title         = #{title,jdbcType=LONGVARCHAR},
+            create_time   = #{createTime,jdbcType=TIMESTAMP},
+            author_id     = #{authorId,jdbcType=BIGINT},
+            category_id   = #{categoryId,jdbcType=BIGINT},
+            view_count    = #{viewCount,jdbcType=BIGINT},
+            thumb_count   = #{thumbCount,jdbcType=BIGINT},
+            collect_count = #{collectCount,jdbcType=BIGINT},
+            content       = #{content,jdbcType=LONGVARCHAR},
+            content_html  = #{contentHtml,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateBatch" parameterType="java.util.List">
+        <!--@mbg.generated-->
+        update article
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="title = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=BIGINT} then #{item.title,jdbcType=LONGVARCHAR}
+                </foreach>
+            </trim>
+            <trim prefix="create_time = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=BIGINT} then #{item.createTime,jdbcType=TIMESTAMP}
+                </foreach>
+            </trim>
+            <trim prefix="author_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=BIGINT} then #{item.authorId,jdbcType=BIGINT}
+                </foreach>
+            </trim>
+            <trim prefix="category_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=BIGINT} then #{item.categoryId,jdbcType=BIGINT}
+                </foreach>
+            </trim>
+            <trim prefix="view_count = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=BIGINT} then #{item.viewCount,jdbcType=BIGINT}
+                </foreach>
+            </trim>
+            <trim prefix="thumb_count = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=BIGINT} then #{item.thumbCount,jdbcType=BIGINT}
+                </foreach>
+            </trim>
+            <trim prefix="collect_count = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=BIGINT} then #{item.collectCount,jdbcType=BIGINT}
+                </foreach>
+            </trim>
+            <trim prefix="content = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=BIGINT} then #{item.content,jdbcType=LONGVARCHAR}
+                </foreach>
+            </trim>
+            <trim prefix="content_html = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=BIGINT} then #{item.contentHtml,jdbcType=LONGVARCHAR}
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach close=")" collection="list" item="item" open="(" separator=", ">
+            #{item.id,jdbcType=BIGINT}
+        </foreach>
+    </update>
+    <update id="updateBatchSelective" parameterType="java.util.List">
+        <!--@mbg.generated-->
+        update article
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="title = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.title != null">
+                        when id = #{item.id,jdbcType=BIGINT} then #{item.title,jdbcType=LONGVARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="create_time = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.createTime != null">
+                        when id = #{item.id,jdbcType=BIGINT} then #{item.createTime,jdbcType=TIMESTAMP}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="author_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.authorId != null">
+                        when id = #{item.id,jdbcType=BIGINT} then #{item.authorId,jdbcType=BIGINT}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="category_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.categoryId != null">
+                        when id = #{item.id,jdbcType=BIGINT} then #{item.categoryId,jdbcType=BIGINT}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="view_count = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.viewCount != null">
+                        when id = #{item.id,jdbcType=BIGINT} then #{item.viewCount,jdbcType=BIGINT}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="thumb_count = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.thumbCount != null">
+                        when id = #{item.id,jdbcType=BIGINT} then #{item.thumbCount,jdbcType=BIGINT}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="collect_count = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.collectCount != null">
+                        when id = #{item.id,jdbcType=BIGINT} then #{item.collectCount,jdbcType=BIGINT}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="content = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.content != null">
+                        when id = #{item.id,jdbcType=BIGINT} then #{item.content,jdbcType=LONGVARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="content_html = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.contentHtml != null">
+                        when id = #{item.id,jdbcType=BIGINT} then #{item.contentHtml,jdbcType=LONGVARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach close=")" collection="list" item="item" open="(" separator=", ">
+            #{item.id,jdbcType=BIGINT}
+        </foreach>
+    </update>
+    <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into article
+        (title, create_time, author_id, category_id, view_count, thumb_count, collect_count,
+         content, content_html)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.title,jdbcType=LONGVARCHAR}, #{item.createTime,jdbcType=TIMESTAMP},
+             #{item.authorId,jdbcType=BIGINT},
+             #{item.categoryId,jdbcType=BIGINT}, #{item.viewCount,jdbcType=BIGINT}, #{item.thumbCount,jdbcType=BIGINT},
+             #{item.collectCount,jdbcType=BIGINT}, #{item.content,jdbcType=LONGVARCHAR},
+             #{item.contentHtml,jdbcType=LONGVARCHAR})
+        </foreach>
+    </insert>
+
+    <select id="selectByParam" parameterType="com.gxu.bsdn.param.ArticleParam" resultMap="ArticleWithAuthorAndCategoryMap">
+        select
+        <include refid="com.gxu.bsdn.dao.TokenMapper.ArticleUserCategory">
+        </include>
+        from (article left join `user` on article.author_id = user.id) left join category on article.category_id = category.id
+        <where>
+            <if test="title!=null and title!=''">
+                and (article.title like CONCAT('%', #{title}, '%'))
+            </if>
+            <if test="author!=null and author!=''">
+                and (`user`.nickname like CONCAT('%', #{author}, '%'))
+            </if>
+            <if test="category!=null and category!=''">
+                and (category.category_name like CONCAT('%', #{category}, '%'))
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByCategoryName" parameterType="com.gxu.bsdn.entity.Category" resultMap="CategoryWithArticleMap">
+        select
+        <include refid="com.gxu.bsdn.dao.TokenMapper.ArticleUserCategory">
+        </include>
+        from (category left join article on category.id = article.category_id) left join user on article.author_id = user.id
+        <where>
+            <if test="categoryName!=null and categoryName!=''">
+                and (category.category_name like CONCAT('%', #{categoryName}, '%'))
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByCategoryId" parameterType="com.gxu.bsdn.entity.Category" resultMap="ArticleWithAuthorAndCategoryMap">
+        select
+        <include refid="com.gxu.bsdn.dao.TokenMapper.ArticleUserCategory">
+        </include>
+        from (article left join `user` on article.author_id = user.id) left join category on article.category_id = category.id
+        where category.id = #{id,jdbcType=BIGINT}
+    </select>
+</mapper>
