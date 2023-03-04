@@ -1,19 +1,14 @@
 package com.gxu.bsdn.controller;
-import com.gxu.bsdn.common.ResultEnum;
+
 import com.gxu.bsdn.entity.User;
 import com.gxu.bsdn.service.UserService;
 import com.gxu.bsdn.utils.Result;
-import com.gxu.bsdn.utils.ResultGenerator;
-import com.gxu.bsdn.utils.TokenUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
-@Api(tags = "用户")
+
 @RestController
 @RequestMapping("/user")
 public class UserController {

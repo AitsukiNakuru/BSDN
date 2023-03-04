@@ -1,7 +1,7 @@
 package com.gxu.bsdn.vo;
 
 import com.gxu.bsdn.entity.User;
-import io.swagger.annotations.ApiModelProperty;
+
 import lombok.Data;
 
 import java.util.Date;
