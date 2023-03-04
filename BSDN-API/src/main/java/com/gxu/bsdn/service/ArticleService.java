@@ -48,4 +48,8 @@ public interface ArticleService{
 
     Result selectByParam(ArticleParam articleParam);
     Result selectByCategoryName(Category category);
+
+    Result selectById(Long articleId);
+
+
 }

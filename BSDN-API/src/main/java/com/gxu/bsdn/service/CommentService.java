@@ -2,6 +2,8 @@ package com.gxu.bsdn.service;
 
 import com.gxu.bsdn.entity.example.CommentExample;
 import com.gxu.bsdn.entity.Comment;
+import com.gxu.bsdn.utils.Result;
+
 import java.util.List;
 public interface CommentService{
 
@@ -33,5 +35,9 @@ public interface CommentService{
     int updateBatchSelective(List<Comment> list);
 
     int batchInsert(List<Comment> list);
+
+    Result addComment(Comment comment);
+
+    Result selectCommentByParam(Comment comment);
 
 }

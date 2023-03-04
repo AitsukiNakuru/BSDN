@@ -6,7 +6,7 @@ import com.gxu.bsdn.entity.example.ArticleExample;
 import java.util.List;
 
 import com.gxu.bsdn.param.ArticleParam;
-import com.gxu.bsdn.vo.ArticleWithAuthorAndCategory;
+import com.gxu.bsdn.vo.ArticleWithOther;
 import com.gxu.bsdn.vo.CategoryWithArticle;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -77,10 +77,19 @@ public interface ArticleMapper {
 
     int batchInsert(@Param("list") List<Article> list);
 
-    List<ArticleWithAuthorAndCategory> selectByParam(ArticleParam articleParam);
+    List<ArticleWithOther> selectByParam(ArticleParam articleParam);
 
     List<CategoryWithArticle> selectByCategoryName(Category category);
 
-    List<ArticleWithAuthorAndCategory> selectByCategoryId(Category category);
+    List<ArticleWithOther> selectByCategoryId(Category category);
+
+
+
+    ArticleWithOther selectById(Long articleId);
+
+    int thumbArticle(Long articleId);
+    int viewArticle(Long articleId);
+    int collectArticle(Long articleId);
+
 
 }

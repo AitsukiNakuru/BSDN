@@ -1,4 +1,6 @@
 package com.gxu.bsdn.controller;
+
+import com.github.pagehelper.PageHelper;
 import com.gxu.bsdn.entity.Article;
 import com.gxu.bsdn.entity.Category;
 import com.gxu.bsdn.param.ArticleParam;
@@ -17,11 +19,11 @@ public class ArticleController {
     private ArticleService articleService;
 
     /**
-    * 通过主键查询单条数据
-    *
-    * @param id 主键
-    * @return 单条数据
-    */
+     * 通过主键查询单条数据
+     *
+     * @param id 主键
+     * @return 单条数据
+     */
     @GetMapping("selectOne")
     public Article selectOne(Long id) {
         return articleService.selectByPrimaryKey(id);
@@ -31,14 +33,23 @@ public class ArticleController {
     public Result publicArticle(@RequestBody Article article) {
         return articleService.publicArticle(article);
     }
+
+    @PostMapping("/selectById")
+    public Result selectById(@RequestParam("articleId") Long articleId) {
+        return articleService.selectById(articleId);
+    }
+
     @PostMapping("/selectByParam")
-    public Result selectByParam(@RequestBody ArticleParam articleParam) {
+    public Result selectByParam(@RequestBody ArticleParam articleParam, @RequestParam("pageSize") int pageSize, @RequestParam("pageNumber") int pageNumber) {
+        PageHelper.startPage(pageNumber, pageSize);
         return articleService.selectByParam(articleParam);
     }
+
     @PostMapping("/selectByCategoryName")
     public Result selectByCategory(@RequestBody Category category) {
         return articleService.selectByCategoryName(category);
     }
+
     @PostMapping("/update")
     public Result updateArticle(@RequestBody Article article) {
         return articleService.updateArticle(article);

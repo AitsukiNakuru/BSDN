@@ -1,11 +1,11 @@
 ### selectByParam
-POST http://localhost:9090/article/selectByParam
+POST http://localhost:9090/article/selectByParam?pageSize=1&pageNumber=1
 Content-Type: application/json
-token: {{token}}
+token:
 
 {
   "author": "",
-  "title": "s",
+  "title": "",
   "category": ""
 }
 
@@ -55,3 +55,9 @@ token: {{token}}
   "description": "藍月なくる",
   "id": 1
 }
+
+### selectById
+POST http://localhost:9090/article/selectById?articleId=5
+Content-Type: application/json
+token:
+

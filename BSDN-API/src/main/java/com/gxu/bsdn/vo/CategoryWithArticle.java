@@ -16,5 +16,5 @@ public class CategoryWithArticle {
     @ApiModelProperty(value="")
     private String description;
 
-    private List<ArticleWithAuthorAndCategory> articleList;
+    private List<ArticleWithOther> articleList;
 }

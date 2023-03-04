@@ -163,8 +163,11 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Override
     public Result selectArticle(Article article) {
-
-        return null;
+        Article articleResult = articleMapper.selectByPrimaryKey(article.getId());
+        if (articleResult != null) {
+            return ResultGenerator.genSuccessResult(ResultEnum.SELECT_SUCCESS.getResult(), articleResult);
+        }
+        return ResultGenerator.genFailResult(ResultEnum.SELECT_FAILURE.getResult());
     }
 
     @Override
@@ -175,5 +178,10 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public Result selectByCategoryName(Category category) {
         return ResultGenerator.genSuccessResult(ResultEnum.SELECT_SUCCESS.getResult(), articleMapper.selectByCategoryName(category));
+    }
+
+    @Override
+    public Result selectById(Long articleId) {
+        return ResultGenerator.genSuccessResult(articleMapper.selectById(articleId));
     }
 }

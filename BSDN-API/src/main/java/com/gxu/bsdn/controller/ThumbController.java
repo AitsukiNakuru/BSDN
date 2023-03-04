@@ -1,6 +1,9 @@
 package com.gxu.bsdn.controller;
 import com.gxu.bsdn.entity.Thumb;
+import com.gxu.bsdn.param.ThumbParam;
 import com.gxu.bsdn.service.ThumbService;
+import com.gxu.bsdn.utils.Result;
+import com.gxu.bsdn.utils.ResultGenerator;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -22,6 +25,19 @@ public class ThumbController {
     @GetMapping("selectOne")
     public Thumb selectOne(Long id) {
         return thumbService.selectByPrimaryKey(id);
+    }
+
+    @PostMapping("/thumb")
+    public Result thumbArticle(@RequestBody ThumbParam thumbParam){
+        return thumbService.thumbArticle(thumbParam);
+    }
+
+    @PostMapping("/isThumb")
+    public Result isThumbArticle(@RequestBody ThumbParam thumbParam) {
+        if (thumbParam.getUserId() == -1) {
+            return ResultGenerator.genSuccessResult(false);
+        }
+        return thumbService.isThumbArticle(thumbParam);
     }
 
 }

@@ -7,7 +7,7 @@ import lombok.Data;
 
 import java.util.Date;
 @Data
-public class ArticleWithAuthorAndCategory {
+public class ArticleWithOther {
     @ApiModelProperty(value="")
     private Long id;
 

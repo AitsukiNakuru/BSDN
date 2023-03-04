@@ -1,5 +1,8 @@
 package com.gxu.bsdn.service.impl;
 
+import com.gxu.bsdn.common.ResultEnum;
+import com.gxu.bsdn.utils.Result;
+import com.gxu.bsdn.utils.ResultGenerator;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.gxu.bsdn.entity.example.CommentExample;
@@ -83,4 +86,18 @@ public class CommentServiceImpl implements CommentService{
         return commentMapper.batchInsert(list);
     }
 
+    @Override
+    public Result addComment(Comment comment) {
+        if (commentMapper.insert(comment) == 1) {
+            return ResultGenerator.genSuccessResult(ResultEnum.INSERT_SUCCESS.getResult());
+        } else {
+            return ResultGenerator.genFailResult(ResultEnum.INSERT_FAILURE.getResult());
+        }
+    }
+
+    @Override
+    public Result selectCommentByParam(Comment comment) {
+
+        return ResultGenerator.genSuccessResult(commentMapper.selectByParam(comment));
+    }
 }

@@ -3,6 +3,8 @@ package com.gxu.bsdn.dao;
 import com.gxu.bsdn.entity.Comment;
 import com.gxu.bsdn.entity.example.CommentExample;
 import java.util.List;
+
+import com.gxu.bsdn.vo.CommentWithUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -71,4 +73,6 @@ public interface CommentMapper {
     int updateBatchSelective(List<Comment> list);
 
     int batchInsert(@Param("list") List<Comment> list);
+
+    List<CommentWithUser> selectByParam(Comment comment);
 }

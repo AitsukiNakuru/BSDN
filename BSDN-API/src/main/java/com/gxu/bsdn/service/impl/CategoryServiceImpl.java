@@ -2,12 +2,9 @@ package com.gxu.bsdn.service.impl;
 
 import com.gxu.bsdn.common.ResultEnum;
 import com.gxu.bsdn.dao.ArticleMapper;
-import com.gxu.bsdn.entity.Article;
-import com.gxu.bsdn.entity.User;
-import com.gxu.bsdn.entity.example.UserExample;
 import com.gxu.bsdn.utils.Result;
 import com.gxu.bsdn.utils.ResultGenerator;
-import com.gxu.bsdn.vo.ArticleWithAuthorAndCategory;
+import com.gxu.bsdn.vo.ArticleWithOther;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -114,7 +111,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Result deleteCategory(Category category) {
-        List<ArticleWithAuthorAndCategory> articleList = articleMapper.selectByCategoryId(category);
+        List<ArticleWithOther> articleList = articleMapper.selectByCategoryId(category);
 
         if (articleList.isEmpty() && categoryMapper.deleteByPrimaryKey(category.getId()) == 1) {
             return ResultGenerator.genSuccessResult(ResultEnum.DELETE_SUCCESS.getResult());
@@ -129,7 +126,7 @@ public class CategoryServiceImpl implements CategoryService {
     public Result selectByCategoryName(Category category) {
         CategoryExample example = new CategoryExample();
         CategoryExample.Criteria criteria = example.createCriteria();
-        criteria.andCategoryNameLike(category.getCategoryName());
+        criteria.andCategoryNameLike('%'+category.getCategoryName()+'%');
         List<Category> categoryList = categoryMapper.selectByExample(example);
         return ResultGenerator.genSuccessResult(categoryList);
     }

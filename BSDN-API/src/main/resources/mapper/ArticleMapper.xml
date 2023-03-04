@@ -15,11 +15,11 @@
         <result column="content" jdbcType="LONGVARCHAR" property="content"/>
         <result column="content_html" jdbcType="LONGVARCHAR" property="contentHtml"/>
     </resultMap>
-    <resultMap id="ArticleWithAuthorAndCategoryMap" type="com.gxu.bsdn.vo.ArticleWithAuthorAndCategory">
+    <resultMap id="ArticleWithAuthorAndCategoryMap" type="com.gxu.bsdn.vo.ArticleWithOther">
         <!--@Table article-->
-        <id column="id" jdbcType="BIGINT" property="id"/>
+        <id column="article_id" jdbcType="BIGINT" property="id"/>
         <result column="title" jdbcType="LONGVARCHAR" property="title"/>
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="article_create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="author_id" jdbcType="BIGINT" property="authorId"/>
         <result column="category_id" jdbcType="BIGINT" property="categoryId"/>
         <result column="view_count" jdbcType="BIGINT" property="viewCount"/>
@@ -29,19 +29,19 @@
         <result column="content_html" jdbcType="LONGVARCHAR" property="contentHtml"/>
         <association property="author" javaType="com.gxu.bsdn.entity.User">
             <!--@Table `user`-->
-            <id column="id" jdbcType="BIGINT" property="id"/>
+            <id column="article_id" jdbcType="BIGINT" property="id"/>
             <result column="username" jdbcType="VARCHAR" property="username"/>
             <result column="password" jdbcType="VARCHAR" property="password"/>
             <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
             <result column="introduction" jdbcType="LONGVARCHAR" property="introduction"/>
             <result column="avatar" jdbcType="LONGVARCHAR" property="avatar"/>
             <result column="email" jdbcType="LONGVARCHAR" property="email"/>
-            <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+            <result column="article_create_time" jdbcType="TIMESTAMP" property="createTime"/>
             <result column="last_login" jdbcType="TIMESTAMP" property="lastLogin"/>
         </association>
         <association property="category" javaType="com.gxu.bsdn.entity.Category">
             <!--@Table category-->
-            <id column="id" jdbcType="BIGINT" property="id" />
+            <id column="category_id" jdbcType="BIGINT" property="id" />
             <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
             <result column="description" jdbcType="LONGVARCHAR" property="description" />
         </association>
@@ -52,7 +52,7 @@
         <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
         <result column="description" jdbcType="LONGVARCHAR" property="description" />
 
-        <collection property="articleList" ofType="com.gxu.bsdn.vo.ArticleWithAuthorAndCategory" resultMap="ArticleWithAuthorAndCategoryMap">
+        <collection property="articleList" ofType="com.gxu.bsdn.vo.ArticleWithOther" resultMap="ArticleWithAuthorAndCategoryMap">
             <!--@Table article-->
             <id column="article_id" jdbcType="BIGINT" property="id"/>
             <result column="title" jdbcType="LONGVARCHAR" property="title"/>
@@ -574,4 +574,30 @@
         from (article left join `user` on article.author_id = user.id) left join category on article.category_id = category.id
         where category.id = #{id,jdbcType=BIGINT}
     </select>
+
+
+
+    <select id="selectById" parameterType="java.lang.Long" resultMap="ArticleWithAuthorAndCategoryMap">
+        select
+            <include refid="com.gxu.bsdn.dao.TokenMapper.ArticleUserCategory">
+            </include>
+        from (article left join `user` on article.author_id = user.id) left join category on article.category_id = category.id
+        where article.id = #{articleId}
+    </select>
+
+    <update id="thumbArticle" parameterType="java.lang.Long">
+        update article
+        set article.thumb_count = article.thumb_count+1
+        where id = #{articleId}
+    </update>
+    <update id="viewArticle" parameterType="java.lang.Long">
+        update article
+        set article.view_count = article.view_count+1
+        where id = #{articleId}
+    </update>
+    <update id="collectArticle" parameterType="java.lang.Long">
+        update article
+        set article.collect_count = article.collect_count+1
+        where id = #{articleId}
+    </update>
 </mapper>

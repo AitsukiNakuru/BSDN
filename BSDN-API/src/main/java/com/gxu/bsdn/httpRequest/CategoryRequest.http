@@ -19,3 +19,14 @@ token: {{token}}
   "description": "",
   "id": 3
 }
+
+### select
+POST http://localhost:9090/category/select
+Content-Type: application/json
+token:
+
+{
+  "categoryName": "a",
+  "description": "",
+  "id": null
+}

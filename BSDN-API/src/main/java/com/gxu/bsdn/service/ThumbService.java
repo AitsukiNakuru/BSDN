@@ -3,6 +3,9 @@ package com.gxu.bsdn.service;
 import com.gxu.bsdn.entity.Thumb;
 import java.util.List;
 import com.gxu.bsdn.entity.example.ThumbExample;
+import com.gxu.bsdn.param.ThumbParam;
+import com.gxu.bsdn.utils.Result;
+
 public interface ThumbService{
 
 
@@ -33,5 +36,9 @@ public interface ThumbService{
     int updateBatchSelective(List<Thumb> list);
 
     int batchInsert(List<Thumb> list);
+
+    Result thumbArticle(ThumbParam thumbParam);
+
+    Result isThumbArticle(ThumbParam thumbParam);
 
 }

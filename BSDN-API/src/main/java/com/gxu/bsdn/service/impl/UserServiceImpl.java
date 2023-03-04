@@ -4,6 +4,8 @@ import com.gxu.bsdn.common.ResultEnum;
 import com.gxu.bsdn.utils.Result;
 import com.gxu.bsdn.utils.ResultGenerator;
 import com.gxu.bsdn.utils.TokenUtils;
+import com.gxu.bsdn.vo.UserWithToken;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.gxu.bsdn.entity.example.UserExample;
@@ -111,7 +113,10 @@ public class UserServiceImpl implements UserService{
         }
         User loginUser = loginUserList.get(0);
         if (loginUser.getPassword().equals(user.getPassword())) {
-            return ResultGenerator.genSuccessResult(ResultEnum.LOGIN_SUCCESS.getResult(), TokenUtils.sign(user));
+            UserWithToken userWithToken = new UserWithToken();
+            BeanUtils.copyProperties(loginUser, userWithToken);
+            userWithToken.setToken(TokenUtils.sign(user));
+            return ResultGenerator.genSuccessResult(ResultEnum.LOGIN_SUCCESS.getResult(), userWithToken);
         }
         return ResultGenerator.genFailResult(ResultEnum.PASSWORD_ERROR.getResult());
     }

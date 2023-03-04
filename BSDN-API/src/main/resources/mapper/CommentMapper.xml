@@ -10,6 +10,26 @@
         <result column="article_id" jdbcType="BIGINT" property="articleId"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
+    <resultMap id="CommentWithUserMap" type="com.gxu.bsdn.vo.CommentWithUser">
+        <!--@Table `comment`-->
+        <id column="comment_id" jdbcType="BIGINT" property="id"/>
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="article_id" jdbcType="BIGINT" property="articleId"/>
+        <result column="comment_create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <association property="user" javaType="com.gxu.bsdn.entity.User">
+            <!--@Table `user`-->
+            <id column="user_id" jdbcType="BIGINT" property="id"/>
+            <result column="username" jdbcType="VARCHAR" property="username"/>
+            <result column="password" jdbcType="VARCHAR" property="password"/>
+            <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+            <result column="introduction" jdbcType="LONGVARCHAR" property="introduction"/>
+            <result column="avatar" jdbcType="LONGVARCHAR" property="avatar"/>
+            <result column="email" jdbcType="LONGVARCHAR" property="email"/>
+            <result column="user_create_time" jdbcType="TIMESTAMP" property="createTime"/>
+            <result column="last_login" jdbcType="TIMESTAMP" property="lastLogin"/>
+        </association>
+    </resultMap>
     <sql id="Example_Where_Clause">
         <!--@mbg.generated-->
         <where>
@@ -86,7 +106,7 @@
         content,
         user_id,
         article_id,
-        create_time,
+        comment.create_time as comment_create_time,
     </sql>
     <select id="selectByExample" parameterType="com.gxu.bsdn.entity.example.CommentExample" resultMap="BaseResultMap">
         <!--@mbg.generated-->
@@ -315,4 +335,18 @@
              #{item.createTime,jdbcType=TIMESTAMP})
         </foreach>
     </insert>
+    <select id="selectByParam" resultMap="CommentWithUserMap" parameterType="com.gxu.bsdn.entity.Comment">
+        select
+            <include refid="com.gxu.bsdn.dao.TokenMapper.CommentUser">
+            </include>
+        from comment left join `user` on comment.user_id = user.id
+        <where>
+            <if test="userId!=null and userId!='' and userId!= -1">
+                and (`user`.id = #{userId})
+            </if>
+            <if test="articleId!=null and articleId!=''">
+                and (article_id = #{articleId})
+            </if>
+        </where>
+    </select>
 </mapper>

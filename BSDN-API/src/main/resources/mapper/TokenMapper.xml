@@ -82,6 +82,12 @@
       </include>
     </trim>
   </sql>
+  <sql id="CommentUser">
+    <trim suffixOverrides=",">
+      <include refid="com.gxu.bsdn.dao.CommentMapper.Comment_Alias_Column_List"/>
+      <include refid="com.gxu.bsdn.dao.UserMapper.User_Alias_Column_List"/>
+    </trim>
+  </sql>
   <select id="selectByExample" parameterType="com.gxu.bsdn.entity.example.TokenExample" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select

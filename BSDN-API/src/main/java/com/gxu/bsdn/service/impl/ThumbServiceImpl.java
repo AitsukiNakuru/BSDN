@@ -1,5 +1,10 @@
 package com.gxu.bsdn.service.impl;
 
+import com.gxu.bsdn.common.ResultEnum;
+import com.gxu.bsdn.dao.ArticleMapper;
+import com.gxu.bsdn.param.ThumbParam;
+import com.gxu.bsdn.utils.Result;
+import com.gxu.bsdn.utils.ResultGenerator;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.gxu.bsdn.dao.ThumbMapper;
@@ -12,6 +17,9 @@ public class ThumbServiceImpl implements ThumbService{
 
     @Resource
     private ThumbMapper thumbMapper;
+
+    @Resource
+    private ArticleMapper articleMapper;
 
     @Override
     public long countByExample(ThumbExample example) {
@@ -83,4 +91,33 @@ public class ThumbServiceImpl implements ThumbService{
         return thumbMapper.batchInsert(list);
     }
 
+    @Override
+    public Result thumbArticle(ThumbParam thumbParam) {
+        ThumbExample example = new ThumbExample();
+        ThumbExample.Criteria criteria = example.createCriteria();
+        criteria.andArticleIdEqualTo(thumbParam.getArticleId()).andUserIdEqualTo(thumbParam.getUserId());
+        List<Thumb> thumbList = thumbMapper.selectByExample(example);
+        if (thumbList.size() == 0) {
+            Thumb thumb = new Thumb();
+            thumb.setUserId(thumbParam.getUserId());
+            thumb.setArticleId(thumbParam.getArticleId());
+            if (thumbMapper.insert(thumb) == 1 && articleMapper.thumbArticle(thumbParam.getArticleId()) == 1) {
+                return ResultGenerator.genSuccessResult(ResultEnum.THUMB_SUCCESS.getResult());
+            }
+        }
+        return ResultGenerator.genFailResult(ResultEnum.THUMB_FAILURE.getResult());
+    }
+
+    @Override
+    public Result isThumbArticle(ThumbParam thumbParam) {
+        ThumbExample example = new ThumbExample();
+        ThumbExample.Criteria criteria = example.createCriteria();
+        criteria.andArticleIdEqualTo(thumbParam.getArticleId()).andUserIdEqualTo(thumbParam.getUserId());
+        List<Thumb> thumb = thumbMapper.selectByExample(example);
+        if (thumb != null) {
+            return ResultGenerator.genSuccessResult(false);
+        } else {
+            return ResultGenerator.genSuccessResult(true);
+        }
+    }
 }
