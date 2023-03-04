@@ -35,9 +35,17 @@ public class ThumbController {
     @PostMapping("/isThumb")
     public Result isThumbArticle(@RequestBody ThumbParam thumbParam) {
         if (thumbParam.getUserId() == -1) {
-            return ResultGenerator.genSuccessResult(false);
+            return ResultGenerator.genSuccessResult(true);
         }
         return thumbService.isThumbArticle(thumbParam);
+    }
+    @PostMapping("/cancelThumb")
+    public Result cancelThumb(@RequestBody ThumbParam thumbParam) {
+        return thumbService.cancelThumb(thumbParam);
+    }
+    @PostMapping("/getThumbCount")
+    public Result getThumbCount(@RequestParam("articleId") Long articleId) {
+        return thumbService.getThumbCount(articleId);
     }
 
 }

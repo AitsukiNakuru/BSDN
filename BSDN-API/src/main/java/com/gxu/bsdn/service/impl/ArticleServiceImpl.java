@@ -102,15 +102,11 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
     @Override
-    public Result view(Article article) {
-        Article articleResult = articleMapper.selectByPrimaryKey(article.getId());
-
-        if (articleResult!=null) {
-            article.setViewCount(article.getViewCount()+1);
-            articleMapper.updateByPrimaryKeySelective(article);
-            return ResultGenerator.genSuccessResult(ResultEnum.SELECT_SUCCESS.getResult(), articleResult);
+    public Result view(Long articleId) {
+        if (articleMapper.viewArticle(articleId) == 1) {
+            return ResultGenerator.genSuccessResult("SUCCESS");
         } else {
-            return ResultGenerator.genFailResult(ResultEnum.SELECT_FAILURE.getResult());
+            return ResultGenerator.genFailResult("ERROR");
         }
     }
 

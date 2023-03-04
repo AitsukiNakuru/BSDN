@@ -39,7 +39,7 @@ public interface ArticleService{
     int batchInsert(List<Article> list);
 
     Result publicArticle(Article article);
-    Result view(Article article);
+    Result view(Long articleId);
     Result thumbArticle(Article article);
     Result collectArticle(Article article);
     Result updateArticle(Article article);

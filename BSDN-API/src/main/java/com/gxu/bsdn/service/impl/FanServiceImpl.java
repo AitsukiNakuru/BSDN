@@ -1,5 +1,6 @@
 package com.gxu.bsdn.service.impl;
 
+import com.gxu.bsdn.vo.ArticleWithOther;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -83,4 +84,50 @@ public class FanServiceImpl implements FanService{
         return fanMapper.batchInsert(list);
     }
 
+    @Override
+    public boolean isSubscribe(Long userId, Long authorId) {
+        FanExample example = new FanExample();
+        FanExample.Criteria criteria = example.createCriteria();
+        criteria.andAuthorIdEqualTo(authorId).andFanIdEqualTo(userId);
+        List<Fan> fanList = fanMapper.selectByExample(example);
+        if (fanList.size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public boolean subscribe(Long userId, Long authorId) {
+        Fan fan = new Fan();
+        fan.setFanId(userId);
+        fan.setAuthorId(authorId);
+        if (fanMapper.insert(fan) == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean cancelSubscribe(Long userId, Long authorId) {
+        FanExample example = new FanExample();
+        FanExample.Criteria criteria = example.createCriteria();
+        criteria.andAuthorIdEqualTo(authorId).andFanIdEqualTo(userId);
+        if (fanMapper.deleteByExample(example) >= 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public List<ArticleWithOther> getSubscribedArticle(Long userId) {
+        return fanMapper.selectSubscribeArticle(userId);
+    }
+
+    @Override
+    public int getFanCount(Long authorId) {
+        return fanMapper.getFanCount(authorId);
+    }
 }

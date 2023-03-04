@@ -253,4 +253,23 @@
             (#{item.authorId,jdbcType=BIGINT}, #{item.fanId,jdbcType=BIGINT})
         </foreach>
     </insert>
+
+    <select id="selectSubscribeArticle" resultMap="com.gxu.bsdn.dao.ArticleMapper.ArticleWithAuthorAndCategoryMap" parameterType="java.lang.Long">
+        select
+            <include refid="com.gxu.bsdn.dao.TokenMapper.ArticleUserCategory">
+            </include>
+        from (article left join `user` on article.author_id = user.id) left join category on article.category_id = category.id
+        where (article.author_id in (
+            select
+                fan.author_id
+            from fan
+            where fan.fan_id = #{userId}
+        ))
+    </select>
+
+    <select id="getFanCount" resultType="int" parameterType="java.lang.Long">
+        select count(*)
+        from fan
+        where author_id = #{authorId}
+    </select>
 </mapper>

@@ -40,7 +40,14 @@ public enum ResultEnum {
     CATEGORY_NOT_EXIST("分类不存在"),
     CATEGORY_ARTICLE_EXIST("分类存在文章"),
     CATEGORY_ARTICLE_NOT_EXIST("分类不存在文章"),
-    VALIDATION_FAILURE("验证失败");
+    VALIDATION_FAILURE("验证失败"),
+
+    // Fan
+    SUBSCRIBE_SUCCESS("订阅成功"),
+    SUBSCRIBE_FAILURE("订阅失败"),
+    CANCEL_SUBSCRIBE_SUCCESS("取消订阅成功"),
+    CANCEL_SUBSCRIBE_FAILURE("取消订阅失败");
+
 
 
 

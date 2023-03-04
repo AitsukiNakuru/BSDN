@@ -257,4 +257,17 @@
             (#{item.articleId,jdbcType=BIGINT}, #{item.userId,jdbcType=BIGINT})
         </foreach>
     </insert>
+
+    <select id="getCollection" resultMap="com.gxu.bsdn.dao.ArticleMapper.ArticleWithAuthorAndCategoryMap" parameterType="java.lang.Long">
+        select
+            <include refid="com.gxu.bsdn.dao.TokenMapper.ArticleUserCategory">
+            </include>
+        from (article left join `user` on article.author_id = user.id) left join category on article.category_id = category.id
+        where (article.id in (
+            select
+            collection.article_id
+            from collection
+            where collection.user_id = #{userId}
+        ))
+    </select>
 </mapper>

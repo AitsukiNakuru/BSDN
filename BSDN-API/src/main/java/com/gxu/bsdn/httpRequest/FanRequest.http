@@ -1,0 +1,10 @@
+### getSubscriptArticle
+POST http://localhost:9090/fan/getSubscriptArticle?userId=3&pageSize=5&pageNumber=1
+Content-Type: application/json
+token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsImV4cCI6MjAzNzkzODE1MiwidXNlcm5hbWUiOiJBaXRzdWtpTmFrdXJ1In0.DGhzUABGg8t9kIHdoeEdtVq8k5eot75b5bcPjshEkfg
+
+
+### isSubscribe
+POST http://localhost:9090/fan/isSubscribe?articleId=3&userId=3
+Content-Type: application/json
+token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoMCIsImV4cCI6MjAzNzkzODE1MiwidXNlcm5hbWUiOiJBaXRzdWtpTmFrdXJ1In0.DGhzUABGg8t9kIHdoeEdtVq8k5eot75b5bcPjshEkfg

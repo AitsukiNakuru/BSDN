@@ -3,6 +3,8 @@ package com.gxu.bsdn.service;
 import java.util.List;
 import com.gxu.bsdn.entity.example.FanExample;
 import com.gxu.bsdn.entity.Fan;
+import com.gxu.bsdn.vo.ArticleWithOther;
+
 public interface FanService{
 
 
@@ -34,4 +36,13 @@ public interface FanService{
 
     int batchInsert(List<Fan> list);
 
+    boolean isSubscribe(Long userId, Long authorId);
+
+    boolean subscribe(Long userId, Long authorId);
+
+    boolean cancelSubscribe(Long userId, Long authorId);
+
+    List<ArticleWithOther> getSubscribedArticle(Long userId);
+
+    int getFanCount(Long authorId);
 }

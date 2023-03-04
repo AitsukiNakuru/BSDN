@@ -41,4 +41,7 @@ public interface ThumbService{
 
     Result isThumbArticle(ThumbParam thumbParam);
 
+    Result getThumbCount(Long articleId);
+
+    Result cancelThumb(ThumbParam thumbParam);
 }

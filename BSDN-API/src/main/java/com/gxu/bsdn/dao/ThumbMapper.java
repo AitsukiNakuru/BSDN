@@ -3,6 +3,8 @@ package com.gxu.bsdn.dao;
 import com.gxu.bsdn.entity.Thumb;
 import com.gxu.bsdn.entity.example.ThumbExample;
 import java.util.List;
+
+import com.gxu.bsdn.utils.Result;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -71,4 +73,6 @@ public interface ThumbMapper {
     int updateBatchSelective(List<Thumb> list);
 
     int batchInsert(@Param("list") List<Thumb> list);
+
+    int getThumbCount(Long articleId);
 }

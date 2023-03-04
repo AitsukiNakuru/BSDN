@@ -255,4 +255,10 @@
             (#{item.articleId,jdbcType=BIGINT}, #{item.userId,jdbcType=BIGINT})
         </foreach>
     </insert>
+
+    <select id="getThumbCount" resultType="java.lang.Integer" parameterType="java.lang.Long">
+        select count(*)
+        from thumb
+        where article_id = #{articleId}
+    </select>
 </mapper>

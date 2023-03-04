@@ -114,10 +114,27 @@ public class ThumbServiceImpl implements ThumbService{
         ThumbExample.Criteria criteria = example.createCriteria();
         criteria.andArticleIdEqualTo(thumbParam.getArticleId()).andUserIdEqualTo(thumbParam.getUserId());
         List<Thumb> thumb = thumbMapper.selectByExample(example);
-        if (thumb != null) {
+        if (thumb.isEmpty()) {
             return ResultGenerator.genSuccessResult(false);
         } else {
             return ResultGenerator.genSuccessResult(true);
+        }
+    }
+
+    @Override
+    public Result getThumbCount(Long articleId) {
+        return ResultGenerator.genSuccessResult(thumbMapper.getThumbCount(articleId));
+    }
+
+    @Override
+    public Result cancelThumb(ThumbParam thumbParam) {
+        ThumbExample example = new ThumbExample();
+        ThumbExample.Criteria criteria = example.createCriteria();
+        criteria.andArticleIdEqualTo(thumbParam.getArticleId()).andUserIdEqualTo(thumbParam.getUserId());
+        if (thumbMapper.deleteByExample(example) == 1) {
+            return ResultGenerator.genSuccessResult(ResultEnum.DELETE_SUCCESS.getResult());
+        } else {
+            return ResultGenerator.genFailResult(ResultEnum.DELETE_FAILURE.getResult());
         }
     }
 }

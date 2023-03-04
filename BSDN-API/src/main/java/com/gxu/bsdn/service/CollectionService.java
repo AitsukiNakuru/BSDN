@@ -1,8 +1,11 @@
 package com.gxu.bsdn.service;
 
 import java.util.List;
+
 import com.gxu.bsdn.entity.Collection;
 import com.gxu.bsdn.entity.example.CollectionExample;
+import com.gxu.bsdn.vo.ArticleWithOther;
+
 public interface CollectionService{
 
 
@@ -34,4 +37,13 @@ public interface CollectionService{
 
     int batchInsert(List<Collection> list);
 
+    boolean getIsCollected(Collection collection);
+
+    boolean addCollection(Collection collection);
+
+    boolean deleteCollection(Collection collection);
+
+    List<ArticleWithOther> getCollection(Long userId);
+
+    Long getCollectionCount(Collection collection);
 }

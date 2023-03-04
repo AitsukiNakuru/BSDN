@@ -3,6 +3,8 @@ package com.gxu.bsdn.dao;
 import com.gxu.bsdn.entity.Collection;
 import com.gxu.bsdn.entity.example.CollectionExample;
 import java.util.List;
+
+import com.gxu.bsdn.vo.ArticleWithOther;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -71,4 +73,6 @@ public interface CollectionMapper {
     int updateBatchSelective(List<Collection> list);
 
     int batchInsert(@Param("list") List<Collection> list);
+
+    List<ArticleWithOther> getCollection(Long userId);
 }

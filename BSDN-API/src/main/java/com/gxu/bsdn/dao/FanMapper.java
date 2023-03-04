@@ -3,6 +3,8 @@ package com.gxu.bsdn.dao;
 import com.gxu.bsdn.entity.Fan;
 import com.gxu.bsdn.entity.example.FanExample;
 import java.util.List;
+
+import com.gxu.bsdn.vo.ArticleWithOther;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -71,4 +73,8 @@ public interface FanMapper {
     int updateBatchSelective(List<Fan> list);
 
     int batchInsert(@Param("list") List<Fan> list);
+
+    List<ArticleWithOther> selectSubscribeArticle(Long userId);
+
+    int getFanCount(Long authorId);
 }

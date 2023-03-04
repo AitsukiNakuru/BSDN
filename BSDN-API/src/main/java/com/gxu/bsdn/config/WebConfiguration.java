@@ -56,10 +56,12 @@ public class WebConfiguration implements WebMvcConfigurer {
         excludePath.add("/category/**");
         excludePath.add("/article/selectByCategory");
         excludePath.add("/article/selectByParam");
-
+        excludePath.add("/article/viewArticle");
         excludePath.add("/article/selectById");
+        excludePath.add("/collection/getCollectionCount");
         excludePath.add("/comment/selectByParam");
-        excludePath.add("/thumb/**");
+        excludePath.add("/fan/getFanCount");
+        excludePath.add("/thumb/getThumbCount");
         excludePath.add("/doc.html");     //swagger
         excludePath.add("/swagger-ui.html");     //swagger
         excludePath.add("/swagger-resources/**");     //swagger

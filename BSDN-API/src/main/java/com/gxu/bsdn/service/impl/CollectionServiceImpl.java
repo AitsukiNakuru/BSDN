@@ -1,5 +1,6 @@
 package com.gxu.bsdn.service.impl;
 
+import com.gxu.bsdn.vo.ArticleWithOther;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
@@ -83,4 +84,40 @@ public class CollectionServiceImpl implements CollectionService{
         return collectionMapper.batchInsert(list);
     }
 
+    @Override
+    public boolean getIsCollected(Collection collection) {
+        CollectionExample example = new CollectionExample();
+        CollectionExample.Criteria criteria = example.createCriteria();
+        criteria.andArticleIdEqualTo(collection.getArticleId()).andUserIdEqualTo(collection.getUserId());
+        List<Collection> collectionList = collectionMapper.selectByExample(example);
+        return !collectionList.isEmpty();
+    }
+
+
+    @Override
+    public boolean addCollection(Collection collection) {
+        return collectionMapper.insert(collection) == 1;
+    }
+
+    @Override
+    public boolean deleteCollection(Collection collection) {
+        CollectionExample example = new CollectionExample();
+        CollectionExample.Criteria criteria = example.createCriteria();
+        criteria.andArticleIdEqualTo(collection.getArticleId()).andUserIdEqualTo(collection.getUserId());
+        return collectionMapper.deleteByExample(example) == 1;
+    }
+
+    @Override
+    public List<ArticleWithOther> getCollection(Long userId) {
+        List<ArticleWithOther> articleList = collectionMapper.getCollection(userId);
+        return articleList;
+    }
+
+    @Override
+    public Long getCollectionCount(Collection collection) {
+        CollectionExample example = new CollectionExample();
+        CollectionExample.Criteria criteria = example.createCriteria();
+        criteria.andArticleIdEqualTo(collection.getArticleId());
+        return collectionMapper.countByExample(example);
+    }
 }

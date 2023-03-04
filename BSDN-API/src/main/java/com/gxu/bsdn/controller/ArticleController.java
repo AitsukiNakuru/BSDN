@@ -54,4 +54,9 @@ public class ArticleController {
     public Result updateArticle(@RequestBody Article article) {
         return articleService.updateArticle(article);
     }
+
+    @PostMapping("/viewArticle")
+    public Result viewArticle(@RequestParam Long articleId) {
+        return articleService.view(articleId);
+    }
 }
