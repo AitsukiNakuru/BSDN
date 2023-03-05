@@ -1,6 +1,9 @@
 package com.gxu.bsdn.service.impl;
 
 import com.gxu.bsdn.common.ResultEnum;
+import com.gxu.bsdn.dao.CollectionMapper;
+import com.gxu.bsdn.dao.CommentMapper;
+import com.gxu.bsdn.dao.ThumbMapper;
 import com.gxu.bsdn.entity.Category;
 import com.gxu.bsdn.entity.example.UserExample;
 import com.gxu.bsdn.param.ArticleParam;
@@ -18,6 +21,15 @@ public class ArticleServiceImpl implements ArticleService{
 
     @Resource
     private ArticleMapper articleMapper;
+
+    @Resource
+    private CommentMapper commentMapper;
+
+    @Resource
+    private ThumbMapper thumbMapper;
+
+    @Resource
+    private CollectionMapper collectionMapper;
 
 
 
@@ -147,14 +159,11 @@ public class ArticleServiceImpl implements ArticleService{
     }
 
     @Override
-    public Result deleteArticle(Article article) {
-        Article articleResult = articleMapper.selectByPrimaryKey(article.getId());
-        if (articleResult!=null) {
-            articleMapper.deleteByPrimaryKey(article.getId());
-            return ResultGenerator.genSuccessResult(ResultEnum.DELETE_SUCCESS.getResult());
-        } else {
-            return ResultGenerator.genFailResult(ResultEnum.DELETE_FAILURE.getResult());
-        }
+    public Result deleteArticle(Long articleId) {
+        articleMapper.deleteByPrimaryKey(articleId);
+        collectionMapper.deleteByArticleId(articleId);
+        thumbMapper.deleteByArticleId(articleId);
+        return ResultGenerator.genSuccessResult(ResultEnum.DELETE_SUCCESS.getResult());
     }
 
     @Override
@@ -179,5 +188,10 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public Result selectById(Long articleId) {
         return ResultGenerator.genSuccessResult(articleMapper.selectById(articleId));
+    }
+
+    @Override
+    public Result selectByAuthorId(Long authorId) {
+        return ResultGenerator.genSuccessResult(articleMapper.selectByAuthorId(authorId));
     }
 }

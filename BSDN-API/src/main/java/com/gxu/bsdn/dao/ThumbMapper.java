@@ -75,4 +75,6 @@ public interface ThumbMapper {
     int batchInsert(@Param("list") List<Thumb> list);
 
     int getThumbCount(Long articleId);
+
+    int deleteByArticleId(Long articleId);
 }

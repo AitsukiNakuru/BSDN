@@ -120,4 +120,12 @@ public class CollectionServiceImpl implements CollectionService{
         criteria.andArticleIdEqualTo(collection.getArticleId());
         return collectionMapper.countByExample(example);
     }
+
+    @Override
+    public boolean deleteByArticleId(Long articleId) {
+        CollectionExample example = new CollectionExample();
+        CollectionExample.Criteria criteria = example.createCriteria();
+        criteria.andArticleIdEqualTo(articleId);
+        return collectionMapper.deleteByExample(example) >= 1;
+    }
 }

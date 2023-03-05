@@ -270,4 +270,10 @@
             where collection.user_id = #{userId}
         ))
     </select>
+
+    <delete id="deleteByArticleId" parameterType="java.lang.Long">
+        delete
+        from `collection`
+        where article_id = #{articleId}
+    </delete>
 </mapper>

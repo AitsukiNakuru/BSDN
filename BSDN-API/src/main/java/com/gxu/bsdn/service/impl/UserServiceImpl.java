@@ -144,7 +144,7 @@ public class UserServiceImpl implements UserService{
         if (userList.isEmpty() && userMapper.insertSelective(user) == 1) {
             return ResultGenerator.genSuccessResult(ResultEnum.REGISTER_SUCCESS.getResult());
         } else {
-            return ResultGenerator.genSuccessResult(ResultEnum.REGISTER_FAILURE.getResult()+ "，" +ResultEnum.USERNAME_EXIST.getResult());
+            return ResultGenerator.genFailResult(ResultEnum.REGISTER_FAILURE.getResult()+ "，" +ResultEnum.USERNAME_EXIST.getResult());
         }
     }
 

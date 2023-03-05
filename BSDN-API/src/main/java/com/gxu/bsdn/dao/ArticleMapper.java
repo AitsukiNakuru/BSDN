@@ -92,4 +92,5 @@ public interface ArticleMapper {
     int collectArticle(Long articleId);
 
 
+    List<ArticleWithOther> selectByAuthorId(Long authorId);
 }

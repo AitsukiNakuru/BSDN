@@ -6,6 +6,7 @@ import com.gxu.bsdn.entity.Category;
 import com.gxu.bsdn.param.ArticleParam;
 import com.gxu.bsdn.service.ArticleService;
 import com.gxu.bsdn.utils.Result;
+import com.gxu.bsdn.utils.ResultGenerator;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -58,5 +59,16 @@ public class ArticleController {
     @PostMapping("/viewArticle")
     public Result viewArticle(@RequestParam Long articleId) {
         return articleService.view(articleId);
+    }
+
+    @PostMapping("/deleteArticle")
+    public Result deleteArticle(@RequestParam Long articleId) {
+        return articleService.deleteArticle(articleId);
+    }
+
+    @PostMapping("/selectByAuthorId")
+    public Result selectByAuthorId(@RequestParam("authorId") Long authorId, @RequestParam("pageSize") int pageSize, @RequestParam("pageNumber") int pageNumber) {
+        PageHelper.startPage(pageNumber, pageSize);
+        return articleService.selectByAuthorId(authorId);
     }
 }

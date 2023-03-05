@@ -75,4 +75,6 @@ public interface CollectionMapper {
     int batchInsert(@Param("list") List<Collection> list);
 
     List<ArticleWithOther> getCollection(Long userId);
+
+    int deleteByArticleId(Long articleId);
 }

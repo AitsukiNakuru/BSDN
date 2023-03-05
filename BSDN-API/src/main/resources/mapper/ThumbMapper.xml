@@ -261,4 +261,10 @@
         from thumb
         where article_id = #{articleId}
     </select>
+
+    <delete id="deleteByArticleId" parameterType="java.lang.Long">
+        delete
+        from thumb
+        where article_id = #{articleId}
+    </delete>
 </mapper>

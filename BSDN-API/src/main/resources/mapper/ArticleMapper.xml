@@ -600,4 +600,12 @@
         set article.collect_count = article.collect_count+1
         where id = #{articleId}
     </update>
+
+    <select id="selectByAuthorId" resultMap="ArticleWithAuthorAndCategoryMap" parameterType="java.lang.Long">
+        select
+            <include refid="com.gxu.bsdn.dao.TokenMapper.ArticleUserCategory">
+            </include>
+        from (article left join `user` on article.author_id = user.id) left join category on article.category_id = category.id
+        where article.author_id = #{authorId}
+    </select>
 </mapper>

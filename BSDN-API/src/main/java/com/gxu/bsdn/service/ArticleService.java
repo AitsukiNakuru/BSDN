@@ -43,7 +43,7 @@ public interface ArticleService{
     Result thumbArticle(Article article);
     Result collectArticle(Article article);
     Result updateArticle(Article article);
-    Result deleteArticle(Article article);
+    Result deleteArticle(Long articleId);
     Result selectArticle(Article article);
 
     Result selectByParam(ArticleParam articleParam);
@@ -52,4 +52,5 @@ public interface ArticleService{
     Result selectById(Long articleId);
 
 
+    Result selectByAuthorId(Long authorId);
 }

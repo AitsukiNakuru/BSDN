@@ -46,4 +46,6 @@ public interface CollectionService{
     List<ArticleWithOther> getCollection(Long userId);
 
     Long getCollectionCount(Collection collection);
+
+    boolean deleteByArticleId(Long articleId);
 }
