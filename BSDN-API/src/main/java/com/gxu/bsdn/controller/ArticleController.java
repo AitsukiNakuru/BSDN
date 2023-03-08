@@ -71,4 +71,11 @@ public class ArticleController {
         PageHelper.startPage(pageNumber, pageSize);
         return articleService.selectByAuthorId(authorId);
     }
+
+    @PostMapping("/articleList")
+    public Result selectArticleList(@RequestBody ArticleParam articleParam, @RequestParam int pageSize, @RequestParam int pageNumber) {
+        PageHelper.startPage(pageNumber, pageSize);
+        return ResultGenerator.genSuccessResult(articleService.selectArticleList(articleParam));
+    }
+
 }

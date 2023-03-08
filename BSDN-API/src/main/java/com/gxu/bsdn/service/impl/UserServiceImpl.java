@@ -4,6 +4,7 @@ import com.gxu.bsdn.common.ResultEnum;
 import com.gxu.bsdn.utils.Result;
 import com.gxu.bsdn.utils.ResultGenerator;
 import com.gxu.bsdn.utils.TokenUtils;
+import com.gxu.bsdn.vo.UserList;
 import com.gxu.bsdn.vo.UserWithToken;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -151,5 +152,18 @@ public class UserServiceImpl implements UserService{
     @Override
     public Result logout(User user) {
         return null;
+    }
+
+    @Override
+    public UserList selectUserList(User user) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andUsernameLike('%'+user.getUsername()+'%').andNicknameLike('%'+user.getNickname()+'%').andEmailLike('%'+user.getEmail()+'%');
+        List<User> userList = userMapper.selectByExample(example);
+        Long userCount = userMapper.countByExample(example);
+        UserList result = new UserList();
+        result.setUserList(userList);
+        result.setUserCount(userCount);
+        return result;
     }
 }

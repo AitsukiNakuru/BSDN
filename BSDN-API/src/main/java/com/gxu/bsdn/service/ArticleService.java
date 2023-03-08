@@ -5,6 +5,7 @@ import com.gxu.bsdn.entity.example.ArticleExample;
 import com.gxu.bsdn.entity.Article;
 import com.gxu.bsdn.param.ArticleParam;
 import com.gxu.bsdn.utils.Result;
+import com.gxu.bsdn.vo.ArticleList;
 
 import java.util.List;
 public interface ArticleService{
@@ -53,4 +54,6 @@ public interface ArticleService{
 
 
     Result selectByAuthorId(Long authorId);
+
+    ArticleList selectArticleList(ArticleParam articleParam);
 }

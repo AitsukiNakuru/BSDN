@@ -93,4 +93,6 @@ public interface ArticleMapper {
 
 
     List<ArticleWithOther> selectByAuthorId(Long authorId);
+
+    Long countByParam(ArticleParam articleParam);
 }

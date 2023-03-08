@@ -1,12 +1,16 @@
 package com.gxu.bsdn.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.gxu.bsdn.entity.User;
 import com.gxu.bsdn.service.UserService;
 import com.gxu.bsdn.utils.Result;
 
+import com.gxu.bsdn.utils.ResultGenerator;
+import com.gxu.bsdn.vo.UserList;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 @RestController
@@ -41,6 +45,12 @@ public class UserController {
     @PostMapping("/register")
     public Result register(@RequestBody User user) {
         return userService.register(user);
+    }
+
+    @PostMapping("/userList")
+    public Result selectUserList(@RequestBody User user, @RequestParam int pageSize, int pageNumber) {
+        PageHelper.startPage(pageNumber, pageSize);
+        return ResultGenerator.genSuccessResult(userService.selectUserList(user));
     }
 
 }

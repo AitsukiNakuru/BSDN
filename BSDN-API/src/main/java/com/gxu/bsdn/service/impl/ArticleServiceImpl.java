@@ -5,10 +5,13 @@ import com.gxu.bsdn.dao.CollectionMapper;
 import com.gxu.bsdn.dao.CommentMapper;
 import com.gxu.bsdn.dao.ThumbMapper;
 import com.gxu.bsdn.entity.Category;
-import com.gxu.bsdn.entity.example.UserExample;
+
 import com.gxu.bsdn.param.ArticleParam;
 import com.gxu.bsdn.utils.Result;
 import com.gxu.bsdn.utils.ResultGenerator;
+import com.gxu.bsdn.vo.ArticleList;
+import com.gxu.bsdn.vo.ArticleWithOther;
+
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.gxu.bsdn.entity.example.ArticleExample;
@@ -193,5 +196,15 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public Result selectByAuthorId(Long authorId) {
         return ResultGenerator.genSuccessResult(articleMapper.selectByAuthorId(authorId));
+    }
+
+    @Override
+    public ArticleList selectArticleList(ArticleParam articleParam) {
+        List<ArticleWithOther> articleList = articleMapper.selectByParam(articleParam);
+        Long articleCount = articleMapper.countByParam(articleParam);
+        ArticleList result = new ArticleList();
+        result.setArticleList(articleList);
+        result.setArticleCount(articleCount);
+        return result;
     }
 }

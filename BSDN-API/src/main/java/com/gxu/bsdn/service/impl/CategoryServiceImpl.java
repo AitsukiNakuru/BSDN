@@ -5,6 +5,7 @@ import com.gxu.bsdn.dao.ArticleMapper;
 import com.gxu.bsdn.utils.Result;
 import com.gxu.bsdn.utils.ResultGenerator;
 import com.gxu.bsdn.vo.ArticleWithOther;
+import com.gxu.bsdn.vo.CategoryList;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -139,5 +140,23 @@ public class CategoryServiceImpl implements CategoryService {
         } else {
             return ResultGenerator.genFailResult(ResultEnum.UPDATE_FAILURE.getResult());
         }
+    }
+
+    @Override
+    public CategoryList selectCategoryList(Category category) {
+        CategoryExample example = new CategoryExample();
+        CategoryExample.Criteria criteria = example.createCriteria();
+        if (category.getCategoryName()!=null) {
+            criteria.andCategoryNameLike("%"+category.getCategoryName()+"%");
+        }
+        if (category.getDescription()!=null) {
+            criteria.andDescriptionLike("%"+category.getDescription()+"%");
+        }
+        List<Category> categoryList = categoryMapper.selectByExample(example);
+        Long categoryCount = categoryMapper.countByExample(example);
+        CategoryList result = new CategoryList();
+        result.setCategoryList(categoryList);
+        result.setCategoryCount(categoryCount);
+        return result;
     }
 }

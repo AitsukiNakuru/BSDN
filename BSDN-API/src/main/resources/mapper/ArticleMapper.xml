@@ -608,4 +608,21 @@
         from (article left join `user` on article.author_id = user.id) left join category on article.category_id = category.id
         where article.author_id = #{authorId}
     </select>
+
+    <select id="countByParam" resultType="java.lang.Long">
+        select
+        count(*)
+        from (article left join `user` on article.author_id = user.id) left join category on article.category_id = category.id
+        <where>
+            <if test="title!=null and title!=''">
+                and (article.title like CONCAT('%', #{title}, '%'))
+            </if>
+            <if test="author!=null and author!=''">
+                and (`user`.nickname like CONCAT('%', #{author}, '%'))
+            </if>
+            <if test="category!=null and category!=''">
+                and (category.category_name like CONCAT('%', #{category}, '%'))
+            </if>
+        </where>
+    </select>
 </mapper>

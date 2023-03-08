@@ -1,5 +1,6 @@
 package com.gxu.bsdn.service.impl;
 
+import com.gxu.bsdn.dao.ArticleMapper;
 import com.gxu.bsdn.vo.ArticleWithOther;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -13,6 +14,9 @@ public class CollectionServiceImpl implements CollectionService{
 
     @Resource
     private CollectionMapper collectionMapper;
+
+    @Resource
+    private ArticleMapper articleMapper;
 
     @Override
     public long countByExample(CollectionExample example) {
@@ -96,6 +100,7 @@ public class CollectionServiceImpl implements CollectionService{
 
     @Override
     public boolean addCollection(Collection collection) {
+        articleMapper.collectArticle(collection.getArticleId());
         return collectionMapper.insert(collection) == 1;
     }
 

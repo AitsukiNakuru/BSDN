@@ -4,6 +4,7 @@ import com.gxu.bsdn.entity.example.UserExample;
 import java.util.List;
 import com.gxu.bsdn.entity.User;
 import com.gxu.bsdn.utils.Result;
+import com.gxu.bsdn.vo.UserList;
 
 public interface UserService{
 
@@ -43,4 +44,6 @@ public interface UserService{
 
     Result register(User user);
     Result logout(User user);
+
+    UserList selectUserList(User user);
 }

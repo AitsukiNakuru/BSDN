@@ -20,6 +20,11 @@ spring:
     username: root
     password: 123456
 
+  devtools:
+    restart:
+      # 默认为true
+      enabled: true
+
 # mybatis
 mybatis:
   mapper-locations: classpath*:/mapper/*.xml

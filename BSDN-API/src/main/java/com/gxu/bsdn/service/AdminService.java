@@ -1,9 +1,11 @@
 package com.gxu.bsdn.service;
 
 import java.util.List;
+
 import com.gxu.bsdn.entity.Admin;
 import com.gxu.bsdn.entity.example.AdminExample;
-public interface AdminService{
+
+public interface AdminService {
 
 
     long countByExample(AdminExample example);
@@ -20,9 +22,9 @@ public interface AdminService{
 
     Admin selectByPrimaryKey(Long id);
 
-    int updateByExampleSelective(Admin record,AdminExample example);
+    int updateByExampleSelective(Admin record, AdminExample example);
 
-    int updateByExample(Admin record,AdminExample example);
+    int updateByExample(Admin record, AdminExample example);
 
     int updateByPrimaryKeySelective(Admin record);
 
@@ -34,4 +36,11 @@ public interface AdminService{
 
     int batchInsert(List<Admin> list);
 
+    int insertOrUpdate(Admin record);
+
+    int insertOrUpdateSelective(Admin record);
+
+
+    String login(Admin admin);
 }
+

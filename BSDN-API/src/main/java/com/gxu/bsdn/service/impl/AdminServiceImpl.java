@@ -1,14 +1,20 @@
 package com.gxu.bsdn.service.impl;
 
+import com.gxu.bsdn.common.ResultEnum;
+import com.gxu.bsdn.entity.example.AdminExample;
+import com.gxu.bsdn.utils.TokenUtils;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
+
 import com.gxu.bsdn.entity.Admin;
 import com.gxu.bsdn.dao.AdminMapper;
-import com.gxu.bsdn.entity.example.AdminExample;
 import com.gxu.bsdn.service.AdminService;
+
 @Service
-public class AdminServiceImpl implements AdminService{
+public class AdminServiceImpl implements AdminService {
 
     @Resource
     private AdminMapper adminMapper;
@@ -49,13 +55,13 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public int updateByExampleSelective(Admin record,AdminExample example) {
-        return adminMapper.updateByExampleSelective(record,example);
+    public int updateByExampleSelective(Admin record, AdminExample example) {
+        return adminMapper.updateByExampleSelective(record, example);
     }
 
     @Override
-    public int updateByExample(Admin record,AdminExample example) {
-        return adminMapper.updateByExample(record,example);
+    public int updateByExample(Admin record, AdminExample example) {
+        return adminMapper.updateByExample(record, example);
     }
 
     @Override
@@ -83,4 +89,29 @@ public class AdminServiceImpl implements AdminService{
         return adminMapper.batchInsert(list);
     }
 
+    @Override
+    public int insertOrUpdate(Admin record) {
+        return adminMapper.insertOrUpdate(record);
+    }
+
+    @Override
+    public int insertOrUpdateSelective(Admin record) {
+        return adminMapper.insertOrUpdateSelective(record);
+    }
+
+    @Override
+    public String login(Admin admin) {
+        AdminExample example = new AdminExample();
+        AdminExample.Criteria criteria = example.createCriteria();
+        criteria.andUsernameEqualTo(admin.getUsername());
+        List<Admin> adminList = adminMapper.selectByExample(example);
+        if (adminList.isEmpty()) {
+            return ResultEnum.USERNAME_NOT_EXIST.getResult();
+        } else if (!admin.getPassword().equals(adminList.get(0).getPassword())) {
+            return ResultEnum.PASSWORD_ERROR.getResult();
+        } else {
+            return TokenUtils.sign(admin);
+        }
+    }
 }
+

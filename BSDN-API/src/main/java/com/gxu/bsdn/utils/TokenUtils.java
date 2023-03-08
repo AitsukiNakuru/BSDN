@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.gxu.bsdn.entity.Admin;
 import com.gxu.bsdn.entity.User;
 
 import java.util.Date;
@@ -32,6 +33,30 @@ public class TokenUtils {
                     .withIssuer("auth0")
                     //存放数据
                     .withClaim("username",user.getUsername())
+                    //过期时间
+                    .withExpiresAt(expireAt)
+                    .sign(Algorithm.HMAC256(TOKEN_SECRET));
+        } catch (IllegalArgumentException | JWTCreationException je) {
+
+        }
+        return token;
+    }
+
+    /**
+     * 生成token
+     * @param admin
+     * @return
+     */
+    public static String sign(Admin admin){
+
+        String token=null;
+        try {
+            Date expireAt=new Date(System.currentTimeMillis()+EXPIRE_TIME);
+            token = JWT.create()
+                    //发行人
+                    .withIssuer("auth0")
+                    //存放数据
+                    .withClaim("username",admin.getUsername())
                     //过期时间
                     .withExpiresAt(expireAt)
                     .sign(Algorithm.HMAC256(TOKEN_SECRET));

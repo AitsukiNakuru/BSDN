@@ -4,6 +4,7 @@ import java.util.List;
 import com.gxu.bsdn.entity.Category;
 import com.gxu.bsdn.entity.example.CategoryExample;
 import com.gxu.bsdn.utils.Result;
+import com.gxu.bsdn.vo.CategoryList;
 
 public interface CategoryService{
 
@@ -44,4 +45,5 @@ public interface CategoryService{
 
     Result updateCategory(Category category);
 
+    CategoryList selectCategoryList(Category category);
 }
