@@ -157,7 +157,12 @@ service.interceptors.request.use((config) => {
       config.data = JSON.stringify(config.data);
     }
     const userStore = useUserStore()
-    config.headers['token'] = userStore.user.token
+    if (userStore.user != undefined) {
+      config.headers['token'] = userStore.user.token
+    } else {
+      config.headers['token'] = ""
+    }
+
     return config;
   },
   (error) =>

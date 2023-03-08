@@ -4,6 +4,11 @@ export interface LoginForm {
   password: string,
 }
 
+export interface RegisterForm {
+  username: string,
+  password: string,
+  nickname: string
+}
 
 export interface User{
   id: number,

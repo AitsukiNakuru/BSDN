@@ -16,11 +16,11 @@
     <mavon-editor class="Markdown-Edit" v-model="article.content"/>
   </div>
   <div>{{article.content}}</div>
-  <el-button @click="handlePublicArticle">发布</el-button>
+  <el-button @click="handlePublicArticle" :disabled="publicDisable">发布</el-button>
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref} from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import {PublicArticle} from "@/Type/api/article";
 import {useUserStore} from "@/store";
 import {getCategoryList} from "@/api/category";
@@ -47,6 +47,15 @@ const handlePublicArticle = () => {
   publicArticle(article.value)
 }
 
+watch(() => userStore.user, (newValue, oldValue) => {
+  updatePublicArticle()
+})
+
+const publicDisable = ref(true)
+const updatePublicArticle = () => {
+  publicDisable.value = userStore.user.id===-1
+}
+
 const testResult = ref()
 const testButton = () => {
   const category = {
@@ -58,6 +67,8 @@ const testButton = () => {
   testResult.value = result
   console.log(result)
 }
+
+
 onMounted(async () => {
   const category = {
     id: 0,
@@ -65,7 +76,6 @@ onMounted(async () => {
     description: "",
   }
   categoryList.value = await getCategoryList(category)
-  article.value.authorId = userStore.user.id
 })
 </script>
 

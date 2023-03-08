@@ -31,9 +31,9 @@
 </template>
 
 <script lang="ts" setup>
-import {ref} from 'vue';
+import {ref, watch} from 'vue';
 
-import {useStore} from "@/store"
+import {useStore, useUserStore} from "@/store"
 import UserBoard from "@/views/UserBoard.vue";
 
 const activeIndex2 = ref('1')
@@ -41,28 +41,33 @@ const handleSelect = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
 
-const menuItems = [
+const menuItems = ref([
   {
     title: "文章列表",
     path: "/home/articleList",
+    disable: false,
   },
   {
-    title: "分类",
-    path: "/home/categoryList",
+    title: "收藏夹",
+    path: "/home/collectionList",
+    disable: false,
   },
   {
     title: "文章编辑",
     path: "/home/articleEdit",
+    disable: false,
   },
   {
-    title: "Fourth",
-    path: "",
+    title: "关注列表",
+    path: "/home/subscribeList",
+    disable: false,
   },
   {
-    title: "测试用",
-    path: "/home/articleDetail",
+    title: "我的文章",
+    path: "/home/myArticleList",
+    disable: false,
   }
-]
+])
 
 const handleMenuItemSelect = () => {
   console.log()

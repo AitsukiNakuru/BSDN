@@ -10,7 +10,7 @@
         <el-button text class="button" @click="handleRegister">注册</el-button>
       </div>
       <div v-else>
-        <el-button text class="button">登出</el-button>
+        <el-button text class="button" @click="handleLogout">登出</el-button>
       </div>
     </div>
 
@@ -44,7 +44,7 @@
     </template>
   </el-dialog>
   <el-dialog class="Register-Dialog"
-             v-model="reigsterDialogVisible"
+             v-model="registerDialogVisible"
              title="注册"
              width="30%"
   >
@@ -77,11 +77,12 @@
 
 <script setup lang="ts">
 import {onMounted, ref} from 'vue';
-import {userLogin} from "@/api/user";
+import {userLogin, userRegister} from "@/api/user";
 import {Result} from "@/Type/interface";
 import {useUserStore} from "@/store";
 import {AxiosResponse} from "axios";
 import {User} from "@/Type/api/user";
+import {ElMessage} from "element-plus";
 
 const userStore = useUserStore();
 const user = ref<User>({
@@ -112,8 +113,8 @@ const cancelLogin = () => {
   loginDialogVisible.value = false;
 }
 const confirmLogin = async () => {
-  console.log("confirm")
   let loginResult = userLogin(userForm.value);
+
   loginResult.then((res) => {
     userStore.user = res
     user.value = res
@@ -132,16 +133,61 @@ const cancelRegister = () => {
   registerDialogVisible.value = false;
 }
 const confirmRegister = () => {
+  console.log("register")
+  let registerResult = userRegister(userForm.value);
+  userForm.value = {
+    username: "",
+    password: "",
+    nickname: "",
+  }
+  registerResult.then((res) => {
+    userStore.user = res
+    user.value = res
+    registerDialogVisible.value = false
+  }, (err) => {
 
+  })
+}
+
+const handleLogout = () => {
+  user.value = {
+    id: -1,
+    username: "",
+    password: "",
+    nickname: "未登录",
+    introduction: "",
+    avatar: "",
+    email: "",
+    createTime: "",
+    lastLogin: "",
+    token: ""
+  }
+  userStore.user = {
+    id: -1,
+    username: "",
+    password: "",
+    nickname: "未登录",
+    introduction: "",
+    avatar: "",
+    email: "",
+    createTime: "",
+    lastLogin: "",
+    token: ""
+  }
 }
 
 onMounted(async () => {
-  userForm.value.username = userStore.user.username
-  userForm.value.password = userStore.user.password
-  if (userForm.value.username != undefined && userForm.value.password != undefined) {
+  if (userStore.user != undefined && userStore.user.id != -1 && userStore.user.id != undefined) {
+
+    userForm.value.username = userStore.user.username
+    userForm.value.password = userStore.user.password
+
     let loginResult = await userLogin(userForm.value);
     userStore.user = loginResult
     user.value = loginResult
+  }
+  if (userForm.value.username != undefined && userForm.value.password != undefined) {
+
   }
 
 })

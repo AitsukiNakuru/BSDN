@@ -16,3 +16,28 @@ export const getArticleList = (data: ArticleParam, pageParam: PageParam) => {
 export const getArticleById = (data: number) => {
   return http.post<ArticleWithOther>('/article/selectById?articleId=' + data)
 }
+
+export const viewArticle = (data: number) => {
+  return http.post<null>('/article/viewArticle', {}, {
+    params: {
+      articleId: data
+    }
+  })
+}
+
+export const getMyArticle = (data: number, pageParam: PageParam) => {
+  return http.post<ArticleWithOther[]>('/article/selectByAuthorId', {}, {
+    params: {
+      authorId: data,
+      pageSize: pageParam.pageSize,
+      pageNumber: pageParam.pageNumber
+    }
+  })
+}
+export const deleteArticle = (data: number) => {
+  return http.post('/article/deleteArticle', {}, {
+    params: {
+      articleId: data
+    }
+  })
+}
