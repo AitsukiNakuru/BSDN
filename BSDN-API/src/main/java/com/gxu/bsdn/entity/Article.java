@@ -38,5 +38,8 @@ public class Article implements Serializable {
 
     private String contentHtml;
 
+    private int pageSize;
+    private int pageNumber;
+
     private static final long serialVersionUID = 1L;
 }

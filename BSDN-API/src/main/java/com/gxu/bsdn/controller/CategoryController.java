@@ -54,4 +54,9 @@ public class CategoryController {
         CategoryList categoryList = categoryService.selectCategoryList(category);
         return ResultGenerator.genSuccessResult(categoryList);
     }
+
+    @PostMapping("/selectAll")
+    public Result selectAll() {
+        return ResultGenerator.genSuccessResult(categoryService.selectCategoryList(new Category()));
+    }
 }

@@ -56,4 +56,6 @@ public interface ArticleService{
     Result selectByAuthorId(Long authorId);
 
     ArticleList selectArticleList(ArticleParam articleParam);
+
+    ArticleList selectArticleList(Article article);
 }

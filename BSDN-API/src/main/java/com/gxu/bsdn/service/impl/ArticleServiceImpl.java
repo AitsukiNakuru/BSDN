@@ -164,8 +164,8 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public Result deleteArticle(Long articleId) {
         articleMapper.deleteByPrimaryKey(articleId);
-        collectionMapper.deleteByArticleId(articleId);
-        thumbMapper.deleteByArticleId(articleId);
+//        collectionMapper.deleteByArticleId(articleId);
+//        thumbMapper.deleteByArticleId(articleId);
         return ResultGenerator.genSuccessResult(ResultEnum.DELETE_SUCCESS.getResult());
     }
 
@@ -206,5 +206,16 @@ public class ArticleServiceImpl implements ArticleService{
         result.setArticleList(articleList);
         result.setArticleCount(articleCount);
         return result;
+    }
+
+
+    @Override
+    public ArticleList selectArticleList(Article article) {
+        List<ArticleWithOther> articleWithOtherList = articleMapper.selectByParam(article);
+        Long articleCount = articleMapper.countByParam(article);
+        ArticleList articleList = new ArticleList();
+        articleList.setArticleList(articleWithOtherList);
+        articleList.setArticleCount(articleCount);
+        return articleList;
     }
 }

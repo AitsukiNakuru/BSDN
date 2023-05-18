@@ -7,7 +7,6 @@
       src="https://aitsukinakuru.com/"
     ></iframe>
   </div>
-
 </template>
 
 <script setup lang="ts">

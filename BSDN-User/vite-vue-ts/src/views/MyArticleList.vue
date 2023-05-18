@@ -1,5 +1,5 @@
 <template>
-  <div>MyArticleList.vue</div>
+
   <div v-infinite-scroll="toLoadMore" :infinite-scroll-disabled="scrollDisable">
     <el-card v-for="(item, index) in articleList" class="Article-Card">
       <div>

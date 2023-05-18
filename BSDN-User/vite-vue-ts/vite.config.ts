@@ -26,9 +26,9 @@ export default defineConfig({
   server: {
     https: false, // 是否开启 https
     open: true, // 是否自动在浏览器打开
-    port: 9091, // 端口号
+    port: 9452, // 端口号
     hmr: true, //开启热更新
-    host: "192.168.137.1",
+    host: "127.0.0.1",
     proxy: {
       "/api": {
         target: `http://127.0.0.1`, // 后台接口

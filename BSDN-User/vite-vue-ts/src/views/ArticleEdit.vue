@@ -1,7 +1,4 @@
 <template>
-  <div>ArticleEdit.vue</div>
-  <el-button @click="testButton">TestButton</el-button>
-  <div>{{article}}</div>
   <el-form :inline="true" :model="article" class="demo-form-inline">
     <el-form-item label="标题">
       <el-input v-model="article.title" placeholder="标题" />
@@ -15,7 +12,6 @@
   <div id="editor">
     <mavon-editor class="Markdown-Edit" v-model="article.content"/>
   </div>
-  <div>{{article.content}}</div>
   <el-button @click="handlePublicArticle" :disabled="publicDisable">发布</el-button>
 </template>
 
@@ -76,6 +72,7 @@ onMounted(async () => {
     description: "",
   }
   categoryList.value = await getCategoryList(category)
+  updatePublicArticle()
 })
 </script>
 

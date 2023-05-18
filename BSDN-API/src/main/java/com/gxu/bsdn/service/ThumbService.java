@@ -37,7 +37,7 @@ public interface ThumbService{
 
     int batchInsert(List<Thumb> list);
 
-    Result thumbArticle(ThumbParam thumbParam);
+    Result thumbArticle(Thumb thumb);
 
     Result isThumbArticle(ThumbParam thumbParam);
 

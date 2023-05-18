@@ -10,7 +10,7 @@
           @select="handleMenuItemSelect"
         >
           <el-menu-item v-for="(item, index) in menuItems" :index=item.path>
-            {{ item.title }} ++ {{ index }}
+            {{ item.title }}
           </el-menu-item>
 
         </el-menu>

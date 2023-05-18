@@ -7,5 +7,6 @@ public class ArticleParam {
     private String author;
     private String title;
     private String category;
-
+    private int pageNumber;
+    private int pageSize;
 }

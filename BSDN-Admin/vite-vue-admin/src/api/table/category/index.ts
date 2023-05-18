@@ -18,3 +18,11 @@ export function updateCategoryApi(categoryParam: CategoryParam) {
 export function deleteCategoryApi(categoryParam: CategoryParam) {
   return http.post<MessageResponseData>('category/delete', categoryParam)
 }
+
+export function addCategoryApi(categoryParam: CategoryParam) {
+  return http.post<MessageResponseData>('category/add', categoryParam)
+}
+
+export function getAllCategoryApi() {
+  return http.post<MessageResponseData>('category/selectAll')
+}

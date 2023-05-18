@@ -28,8 +28,8 @@ public class ThumbController {
     }
 
     @PostMapping("/thumb")
-    public Result thumbArticle(@RequestBody ThumbParam thumbParam){
-        return thumbService.thumbArticle(thumbParam);
+    public Result thumbArticle(@RequestBody Thumb thumb){
+        return thumbService.thumbArticle(thumb);
     }
 
     @PostMapping("/isThumb")

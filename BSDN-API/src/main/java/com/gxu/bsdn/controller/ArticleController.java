@@ -40,12 +40,17 @@ public class ArticleController {
         return articleService.selectById(articleId);
     }
 
-    @PostMapping("/selectByParam")
+    /*@PostMapping("/selectByParam")
     public Result selectByParam(@RequestBody ArticleParam articleParam, @RequestParam("pageSize") int pageSize, @RequestParam("pageNumber") int pageNumber) {
         PageHelper.startPage(pageNumber, pageSize);
         return articleService.selectByParam(articleParam);
-    }
+    }*/
 
+    /**
+     * 好像没用到
+     * @param category
+     * @return
+     */
     @PostMapping("/selectByCategoryName")
     public Result selectByCategory(@RequestBody Category category) {
         return articleService.selectByCategoryName(category);
@@ -72,10 +77,16 @@ public class ArticleController {
         return articleService.selectByAuthorId(authorId);
     }
 
+    //admin
     @PostMapping("/articleList")
-    public Result selectArticleList(@RequestBody ArticleParam articleParam, @RequestParam int pageSize, @RequestParam int pageNumber) {
+    public Result selectByParam(@RequestBody ArticleParam articleParam, @RequestParam int pageSize, @RequestParam int pageNumber) {
         PageHelper.startPage(pageNumber, pageSize);
         return ResultGenerator.genSuccessResult(articleService.selectArticleList(articleParam));
     }
 
+    @PostMapping("/getArticleList")
+    public Result selectArticleList(Article article, @RequestParam int pageSize, @RequestParam int pageNumber) {
+        PageHelper.startPage(article.getPageNumber(), article.getPageSize());
+        return ResultGenerator.genSuccessResult(articleService.selectArticleList(article));
+    }
 }

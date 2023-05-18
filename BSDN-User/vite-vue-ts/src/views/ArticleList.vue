@@ -1,5 +1,5 @@
 <template>
-  <div>{{categoryList}}</div>
+
   <el-form :inline="true" :model="articleParam" class="demo-form-inline">
     <el-form-item label="标题">
       <el-input v-model="articleParam.title" placeholder="标题" />

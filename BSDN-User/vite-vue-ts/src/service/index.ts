@@ -150,7 +150,7 @@ const hideLoading = () => {
 };
 
 service.interceptors.request.use((config) => {
-    showLoading();
+    //showLoading();
     // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加了
     //若请求方式为post，则将data参数转为JSON字符串
     if (config.method === "POST") {
@@ -177,6 +177,9 @@ service.interceptors.response.use(
     //这里的response包含config, 后端传回真正的data（包含code，message，data），headers，request，status（200， 400， 500）
     const { code, message, data } = response.data
     if (code === 200) {
+      if (message != "SUCCESS") {
+        ElMessage.success(message)
+      }
       return data;
     } else {
       ElMessage.error(message)

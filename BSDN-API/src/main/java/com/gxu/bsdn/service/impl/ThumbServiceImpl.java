@@ -92,16 +92,16 @@ public class ThumbServiceImpl implements ThumbService{
     }
 
     @Override
-    public Result thumbArticle(ThumbParam thumbParam) {
+    public Result thumbArticle(Thumb thumb) {
         ThumbExample example = new ThumbExample();
         ThumbExample.Criteria criteria = example.createCriteria();
-        criteria.andArticleIdEqualTo(thumbParam.getArticleId()).andUserIdEqualTo(thumbParam.getUserId());
+        criteria.andArticleIdEqualTo(thumb.getArticleId()).andUserIdEqualTo(thumb.getUserId());
         List<Thumb> thumbList = thumbMapper.selectByExample(example);
         if (thumbList.size() == 0) {
-            Thumb thumb = new Thumb();
-            thumb.setUserId(thumbParam.getUserId());
-            thumb.setArticleId(thumbParam.getArticleId());
-            if (thumbMapper.insert(thumb) == 1 && articleMapper.thumbArticle(thumbParam.getArticleId()) == 1) {
+            Thumb thumbNew = new Thumb();
+            thumbNew.setUserId(thumb.getUserId());
+            thumbNew.setArticleId(thumb.getArticleId());
+            if (thumbMapper.insert(thumbNew) == 1 && articleMapper.thumbArticle(thumbNew.getArticleId()) == 1) {
                 return ResultGenerator.genSuccessResult(ResultEnum.THUMB_SUCCESS.getResult());
             }
         }

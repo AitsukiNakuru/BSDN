@@ -79,6 +79,8 @@ public interface ArticleMapper {
 
     List<ArticleWithOther> selectByParam(ArticleParam articleParam);
 
+    List<ArticleWithOther> selectByParam(Article article);
+
     List<CategoryWithArticle> selectByCategoryName(Category category);
 
     List<ArticleWithOther> selectByCategoryId(Category category);
@@ -95,4 +97,6 @@ public interface ArticleMapper {
     List<ArticleWithOther> selectByAuthorId(Long authorId);
 
     Long countByParam(ArticleParam articleParam);
+
+    Long countByParam(Article article);
 }
